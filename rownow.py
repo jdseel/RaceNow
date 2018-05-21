@@ -17,12 +17,15 @@ class Race(db.Model):
     __tablename__='races'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
+    location = db.Column(db.String(64))
+    type = db.Column(db.String(64))
     about = db.Column(db.Text)
     events = db.relationship('Event', backref='race', cascade="delete")
 class Event(db.Model):
     __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
+    race_type = db.Column(db.String(256))
     age_level = db.Column(db.String(256))
     results = db.Column(db.Text)
     race_id = db.Column(db.Integer, db.ForeignKey('races.id'))
@@ -40,10 +43,12 @@ def add_races():
     if request.method == 'POST':
         # get data from the form
         name = request.form['name']
+        location = request.form['location']
+        type = request.form['type']
         about = request.form['about']
 
         # insert the data into the database
-        race = Race(name=name, about=about)
+        race = Race(name=name, about=about, location=location, type=type)
         db.session.add(race)
         db.session.commit()
         return redirect(url_for('show_all_races'))
@@ -52,11 +57,14 @@ def add_races():
 @app.route('/api/race/add', methods=['POST'])
 def add_ajax_races():
     # get data from the form
+
     name = request.form['name']
+    location = request.form['location']
+    type = request.form['type']
     about = request.form['about']
 
     # insert the data into the database
-    race = Race(name=name, about=about)
+    race = Race(name=name, about=about, type=type, location=location)
     db.session.add(race)
     db.session.commit()
     # flash message type: success, info, warning, and danger from bootstrap
@@ -72,6 +80,8 @@ def edit_race(id):
     if request.method == 'POST':
         # update data based on the form data
         race.name = request.form['name']
+        race.location = request.form['location']
+        race.type = request.form['type']
         race.about = request.form['about']
         # update the database
         db.session.commit()
@@ -113,11 +123,12 @@ def add_events():
     if request.method == 'POST':
         # get data from the form
         name = request.form['name']
+        race_type = request.form['race_type']
         age_level = request.form['age_level']
         results = request.form['results']
         race_name = request.form['race']
         race = Race.query.filter_by(name=race_name).first()
-        event = Event(name=name, age_level=age_level, results=results, race=race)
+        event = Event(name=name,race_type=race_type , age_level=age_level, results=results, race=race)
 
         # insert the data into the database
         db.session.add(event)
@@ -134,6 +145,7 @@ def edit_event(id):
     if request.method == 'POST':
         # update data based on the form data
         event.name = request.form['name']
+        event.race_type = request.form['race_type']
         event.age_level = request.form['age_level']
         event.results = request.form['results']
         race_name = request.form['race']

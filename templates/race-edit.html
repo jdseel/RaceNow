@@ -11,6 +11,19 @@
         <input class="form-control" type="text" name="name" value="{{race.name}}" required="true">
       </div>
       <div class="form-group">
+        <label>Location</label>
+        <input class="form-control" name="location" value="{{race.location}}" required="true">
+      </div>
+    <div class="form-group">
+    <label>Type</label>
+      <select class="form-control" name="type" placeholder="Type" required="true">
+        <option>{{race.type}}</option>
+        <option>Head</option>
+        <option>Sprint</option>
+        <option>Henley</option>
+    </select>
+  </div>
+      <div class="form-group">
         <label>About</label>
         <textarea class="form-control" name="about" required="true">{{race.about}}</textarea>
       </div>
