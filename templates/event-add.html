@@ -1,0 +1,43 @@
+{% extends "home-base.html"%}
+{% block title %}Add Events{% endblock %}
+{% block page_content%}
+
+  <!-- Page Content -->
+  <div class="container">
+    <h1 class="mt-5"><i class="fa fa-calendar" aria-hidden="true"></i> Add Events:</h1>
+    <form action="/event/add" method="post">
+      <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" type="text" name="name" placeholder="Name of the Event" required="true">
+      </div>
+      <div class="form-group">
+        <label>Age Level</label>
+        <select class="form-control" name="age_level" placeholder="Age Level of Event" required="true">
+              <option>High School</option>
+              <option>Club</option>
+              <option>Collegiate</option>
+              <option>Junior</option>
+              <option>Masters</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Race</label>
+        <select class="form-control" name="race">
+          {% for race in races %}
+              <option>{{race.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        Race not in the list? <a href="/race/add" class="btn btn-success" role="button" aria-disabled="true">Add Races</a>
+      </div>
+
+      <div class="form-group">
+        <label>Results</label>
+        <textarea class="form-control" name="results" placeholder="Results, if available" ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Event</button>
+    </form>
+  </div>
+
+{% endblock%}

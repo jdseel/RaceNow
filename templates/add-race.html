@@ -1,0 +1,51 @@
+{% extends "home-base.html"%}
+{% block title %}Add Races{% endblock %}
+{% block page_content%}
+
+  <!-- Page Content -->
+  <div class="container">
+    <h1 class="mt-5"><i class="fa fa-caret-square-o-up" aria-hidden="true"></i> Add Races:</h1>
+    <form action="/race/add" method="post" id="add-race-form">
+      <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" type="text" name="name" placeholder="Name of the Race/Regatta" required="true">
+      </div>
+      <div class="form-group">
+        <label>About</label>
+        <textarea class="form-control" name="about" placeholder="Brief Introduction" required="true"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Race</button>
+      <button type="submit" class="btn btn-success" id="insert-ajax-btn">Add Race Ajax</button>
+    </form>
+  </div>
+
+{% endblock%}
+
+{% block scripts%}
+{{super()}}
+<script>
+  $(document).ready(function() {
+    $("#insert-ajax-btn").click(function(event) {
+      event.preventDefault(); // prevent the button to submit the form
+      $.ajax({
+          type: "POST",
+          url: "/api/race/add",
+          data: $("#add-race-form").serialize(),
+          success: function(response) {
+            window.location.replace("/races"); // redirect
+          } // end of success callback function
+        }) // end of ajax call
+        .fail(function(error) {
+          // console.log(data);
+          swal({
+            title: "Oops...",
+            text: "Insertion failed",
+            type: "error",
+            timer: 2000,
+            showConfirmButton: false
+          }); // end of SweetAlert
+        }); // end of fail callback function
+    }); // end of button click event function
+  }); // end doc ready
+</script>
+{% endblock%}

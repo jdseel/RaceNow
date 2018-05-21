@@ -1,0 +1,46 @@
+{% extends "home-base.html"%}
+{% block title %}Edit Event{% endblock %}
+{% block page_content%}
+
+  <!-- Page Content -->
+  <div class="container">
+    <h1 class="mt-5"><i class="fa fa-calendar" aria-hidden="true"></i> Edit Event:</h1>
+    <form action="/event/edit/{{event.id}}" method="post">
+      <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" type="text" name="name" value="{{event.name}}" required="true">
+      </div>
+      <div class="form-group">
+        <label>Age Level</label>
+        <select class="form-control" name="age_level" value="{{event.age_level}}" required="true">
+              <option>High School</option>
+              <option>Club</option>
+              <option>Collegiate</option>
+              <option>Junior</option>
+              <option>Masters</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Race</label>
+        <select class="form-control" name="race">
+          {% for race in races %}
+            {% if race == event.race %}
+              <option selected="selected">{{race.name}}</option>
+            {% else %}
+              <option>{{race.name}}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        Race not in the list? <a href="/race/add" class="btn btn-success" role="button" aria-disabled="true">Add Races</a>
+      </div>
+      <div class="form-group">
+        <label>Results</label>
+        <textarea class="form-control" name="results" placeholder="Results, if available" >{{event.results}}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+  </div>
+
+{% endblock%}

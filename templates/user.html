@@ -1,0 +1,15 @@
+{% extends "home-base.html" %}
+{% block title %} {{uname}} {% endblock %}
+{% block head%}
+{{ super() }}
+{% endblock %}
+{% block body %}
+    <h1></h1>
+    {#THis is a comment for template#}
+    {% if uname == "Jonathan" %}
+      <h2>Welcome Regatta Manager</h2>
+    {% else %}
+    <h2>Welcome Team Manager, {{uname}}</h2>
+    {% endif %}
+
+{% endblock %}
