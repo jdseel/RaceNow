@@ -1,0 +1,13 @@
+body {
+  padding-top: 54px;
+  background-color: #F0F8FF;
+  font-family: 'Exo', sans-serif;
+}
+
+.bottom-margin {
+  margin-bottom: 10px;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
