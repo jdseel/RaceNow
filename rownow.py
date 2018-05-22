@@ -178,8 +178,8 @@ def delete_ajax_event(id):
     return jsonify({"id": str(event.id), "name": event.name})
 
 @app.route('/about')
-def user():
-    return "About page!"
+def about():
+    return render_template('about.html')
 
 
 if __name__ == '__main__':
